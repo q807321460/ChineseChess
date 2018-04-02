@@ -1,0 +1,289 @@
+fileFormatVersion: 2
+guid: 4464c0ddfe21b824da7b33a9ca004406
+timeCreated: 1522295311
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: chess
+    21300002: blackBing0
+    21300004: blackJu0
+    21300006: blackMa0
+    21300008: blackPao0
+    21300010: blackShi0
+    21300012: blackShuai0
+    21300014: blackXiang0
+    21300016: redBing0
+    21300018: redJu0
+    21300020: redMa0
+    21300022: redPao0
+    21300024: redShi0
+    21300026: redShuai0
+    21300028: redXiang0
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: blackBing0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 360
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: blackJu0
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 437
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: blackMa0
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 361
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: blackPao0
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 356
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: blackShi0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 284
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: blackShuai0
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 285
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: blackXiang0
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 280
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redBing0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 208
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redJu0
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 209
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redMa0
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 204
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redPao0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 132
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redShi0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 436
+        width: 82
+        height: 75
+      alignment: 9
+      pivot: {x: 0.7804878, y: 0.14666666}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redShuai0
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 133
+        width: 76
+        height: 74
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.13513513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: redXiang0
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 432
+        width: 76
+        height: 79
+      alignment: 9
+      pivot: {x: 0.84210527, y: 0.18987341}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

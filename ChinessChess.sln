@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinessChess", "Assembly-CSharp.csproj", "{B693DB28-6829-64F1-4ACA-3B6EA07917F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinessChess", "Assembly-CSharp-Editor.csproj", "{A15A6658-BB6E-73D4-049C-60CB6A10E78D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B693DB28-6829-64F1-4ACA-3B6EA07917F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B693DB28-6829-64F1-4ACA-3B6EA07917F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B693DB28-6829-64F1-4ACA-3B6EA07917F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B693DB28-6829-64F1-4ACA-3B6EA07917F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15A6658-BB6E-73D4-049C-60CB6A10E78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15A6658-BB6E-73D4-049C-60CB6A10E78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15A6658-BB6E-73D4-049C-60CB6A10E78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15A6658-BB6E-73D4-049C-60CB6A10E78D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

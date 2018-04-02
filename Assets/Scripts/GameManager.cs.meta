@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 96ef1e9de4492334aa8e821faf1dfa80
+timeCreated: 1522398708
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - prefabBlackBing: {fileID: 1941274215404342, guid: 3271e841d83fe4746bebbf7e081a10d1,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
