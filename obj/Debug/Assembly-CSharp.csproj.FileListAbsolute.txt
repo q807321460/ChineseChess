@@ -38,6 +38,4 @@ G:\UnityProjects\ChinessChess\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
 G:\UnityProjects\ChinessChess\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 G:\UnityProjects\ChinessChess\obj\Debug\Assembly-CSharp.dll
 G:\UnityProjects\ChinessChess\obj\Debug\Assembly-CSharp.pdb
-G:\UnityProjects\ChinessChess\Temp\bin\Debug\SimpleJson.dll
-G:\UnityProjects\ChinessChess\Temp\bin\Debug\SocketIO.dll
 G:\UnityProjects\ChinessChess\Temp\bin\Debug\websocket-sharp.dll

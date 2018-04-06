@@ -123,13 +123,13 @@ public class ChessBoard : MonoBehaviour {
 	}
 
 	// 如果是服务器，则黑子朝向不变
-	public void InitServerChessPieces() {
-		print ("初始化服务器端的棋子");
+	public void InitBlackChessPieces() {
+		print ("初始化黑方的棋子");
 		InitChessPieces ();
 	}
 
-	public void InitClientChessPieces() {
-		print ("初始化客户端的棋子");
+	public void InitRedChessPieces() {
+		print ("初始化红方的棋子");
 		InitChessPieces ();
 		ReverseChessPieces ();
 	}

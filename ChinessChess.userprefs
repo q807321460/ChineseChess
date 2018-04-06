@@ -2,16 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameManager.cs" Line="22" Column="90" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="5" Column="22" />
       <File FileName="Assets\Scripts\ChessPiece.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ChessBoard.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MyTexture.cs" Line="3" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="G:\UnityProjects\ChinessChess\Assets\Scripts\GameManager.cs" line="103" column="49" />
-      <Breakpoint file="G:\UnityProjects\ChinessChess\Assets\Scripts\GameManager.cs" line="108" column="28" />
-      <Breakpoint file="G:\UnityProjects\ChinessChess\Assets\Scripts\GameManager.cs" line="22" column="50" />
+      <Breakpoint file="G:\UnityProjects\ChinessChess\Assets\Scripts\GameManager.cs" line="56" column="17" />
+      <Breakpoint file="G:\UnityProjects\ChinessChess\Assets\Scripts\GameManager.cs" line="33" column="10" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

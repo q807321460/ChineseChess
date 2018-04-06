@@ -1,111 +1,114 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.Networking.Types;
-using UnityEngine.Networking.Match;
-using UnityEngine.Networking.PlayerConnection;
-//using System.Collections.Generic;
 using WebSocketSharp;
+using UnityEngine.UI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
+// Unity自带的Json解析方式，灵活性实在太差了，我怎么能预先知道json字符串的内容呢？所以用Newtonsoft.Json好了
+//public class WebsocektMessage {
+//	public string type;
+//	public object message;
+//}
 
-public class GameManager : NetworkBehaviour {
+public class GameManager : MonoBehaviour {
 
-	public enum NET_TYPE {NONE, SERVER, CLIENT};
+	public enum NET_TYPE { NONE, PLAYER_RED, PLAYER_BLACK }; // 未准备，红方，黑方
 	public NET_TYPE m_netType = NET_TYPE.NONE;
 	public GameObject m_chessBoard = null;
+	public WebSocket m_ws = null;
+	public string m_url = "ws://127.0.0.1:8088/ALiCloudServer/WebsocketTest/";
+	public InputField m_txtPlayerName = null;
+	public Button m_btnConnect = null;
+	public Button m_btnDisconnect = null;
+	public Stack<Dictionary<string, object>> m_stackMessage = new Stack<Dictionary<string, object>>();
+
+	private static volatile GameManager instance;
+	private static object syncRoot = new Object();
+	public static GameManager Instance {
+		get {
+			if (instance == null) {
+				lock (syncRoot) {
+					if (instance == null)
+						instance = new GameManager();
+				}
+			}
+			return instance;
+		}
+	}
+
+	public void OnConnectClicked() {
+		if (m_ws != null && m_ws.IsAlive) {
+			print("已连入，不能重新连入");
+			return;
+		}
+		m_url += m_txtPlayerName.text;
+		m_ws = new WebSocket(m_url); // 47.100.97.154
+		m_ws.OnOpen += (sender, e) => {
+			print("OnOpen");
+			m_chessBoard.SendMessage("InitServerChessPieces", SendMessageOptions.DontRequireReceiver);
+		};
+		m_ws.OnMessage += (sender, e) => {
+			OnMessage(e.Data);
+		};
+		m_ws.OnError += (sender, e) => {
+			print("OnError : " + e.Message);
+		};
+		m_ws.OnClose += (sender, e) => {
+			print("OnClose");
+		};
+		m_ws.Connect();
+		m_ws.Send("test");
+	}
+
+	public void OnDisconnectClicked() {
+		m_ws.Close();
+	}
 
 	void Start() {
-		//		NetworkManager.singleton.StartMatchMaker(); // 启用Unet网络对战功能 47.100.97.154
-//		FindInternetMatch ("test");
-		var ws = new WebSocket ("ws://47.100.97.154:8088/ALiCloudServer/WebsocketTest/KongHanwen");
-		ws.OnOpen += (sender, e) => {
-			print (e.ToString ());
-		};
-		ws.OnMessage += (sender, e) => {
-			print (e.Data);
-		};
-		ws.OnError += (sender, e) => {
-			print (e.Message);
-		};
-		ws.OnClose += (sender, e) => {
-			print (e.Reason);
-		};
-		ws.ConnectAsync ();
-		ws.SendAsync = (flag) => {
-			print("send finish");
-		};
+		m_txtPlayerName.text = "Kong";
+		m_btnConnect.onClick.AddListener(OnConnectClicked);
+		m_btnDisconnect.onClick.AddListener(OnDisconnectClicked);
 	}
 
-	// 创建房间
-	public void CreateInternetMatch(string matchName) {
-		NetworkManager.singleton.matchMaker.CreateMatch(matchName, 4, true, "", "", "", 0, 0, OnInternetMatchCreate);
+	void Update() {
+		DoMessage();
 	}
 
-	// 创建房间后使用
-	private void OnInternetMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo) {
-		if (success) {
-			Debug.Log("创建房间成功");
-			MatchInfo hostInfo = matchInfo;
-			NetworkServer.Listen(hostInfo, 9999);
-			NetworkManager.singleton.StartHost(hostInfo);
-			m_netType = NET_TYPE.SERVER;
-			m_chessBoard.SendMessage ("InitServerChessPieces", SendMessageOptions.DontRequireReceiver);
-		} else {
-			Debug.LogError("创建房间失败");
+	public void DoMessage() {
+		if (m_stackMessage.Count == 0)
+			return;
+		Dictionary<string, object> dic = m_stackMessage.Pop();
+		string sType = dic["type"].ToString();
+		print("接收到的数据类型为：" + sType);
+		// 服务器检测到有新玩家连入时，则返回当前玩家数，如果当前连入量大于2，则主动断开
+		switch (sType) {
+			case "player_count":
+				int player_count = int.Parse(dic["message"].ToString());
+				print("当前服务器人数为：" + player_count);
+				if (player_count == 1) {
+					m_netType = NET_TYPE.PLAYER_BLACK; // 先进入的用黑子，这里可以根据需求修改
+					m_chessBoard.SendMessage("InitBlackChessPieces", SendMessageOptions.DontRequireReceiver);
+				} else if (player_count == 2) {
+					m_netType = NET_TYPE.PLAYER_RED; // 后进入的用红子
+					m_chessBoard.SendMessage("InitRedChessPieces", SendMessageOptions.DontRequireReceiver);
+				} else {
+					print("玩家数只能有两位，断开");
+					m_ws.Close();
+				}
+				break;
 		}
 	}
 
-	// 搜索指定房间列表
-	public void FindInternetMatch(string matchName) {
-		NetworkManager.singleton.matchMaker.ListMatches(0, 10, matchName, false, 0, 0, OnInternetMatchList);
+	// 这里不能直接发送消息给其他对象，因此需要先将消息存在本地栈中，刷新帧的时候读取
+	public void OnMessage(string message) {
+		print (message);
+		Dictionary<string, object> dic = JsonConvert.DeserializeObject<Dictionary<string, object>>(message);
+		m_stackMessage.Push(dic);
 	}
 
-	// 搜索房间列表后返回
-	private void OnInternetMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches) {
-		if (success) {
-			if (matches.Count != 0) {
-				Debug.Log("返回了一个匹配房间列表");
-				NetworkManager.singleton.matchMaker.JoinMatch(matches[matches.Count - 1].networkId, "", "", "", 0, 0, OnJoinInternetMatch);
-			} else {
-				Debug.Log("没有找到房间!");
-				CreateInternetMatch ("test");
-			}
-		} else {
-			Debug.LogError("无法连接至房间");
-		}
+	public void OnDestroy() {
+		m_ws.Close ();
 	}
-
-	// 在客户端使用，连入房间后进入这里
-	private void OnJoinInternetMatch(bool success, string extendedInfo, MatchInfo matchInfo) {
-		if (success) {
-			Debug.Log("Able to join a match");
-			MatchInfo hostInfo = matchInfo;
-			NetworkManager.singleton.StartClient(hostInfo);
-//			NetworkManager.singleton.onclient
-			m_netType = NET_TYPE.CLIENT;
-			m_chessBoard.SendMessage ("InitClientChessPieces", SendMessageOptions.DontRequireReceiver);
-		} else {
-			Debug.LogError("加入房间失败");
-		}
-	}
-
-	public virtual void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
-		print ("OnServerAddPlayer");
-	}
-
-	public virtual void OnServerConnect(NetworkConnection connection) {
-		string text = "Client " + connection.connectionId + " Connected!";
-		print (text);
-	}
-
-	public virtual void OnServerDisconnect(NetworkConnection connection) {
-		string text = "Client " + connection.connectionId + " Disconnect!";
-		print (text);
-	}
-
-	public override void OnStartServer() {
-		print ("OnStartServer");
-	}
-
 }
