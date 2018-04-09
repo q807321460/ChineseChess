@@ -39,3 +39,4 @@ G:\UnityProjects\ChinessChess\obj\Debug\Assembly-CSharp.csprojResolveAssemblyRef
 G:\UnityProjects\ChinessChess\obj\Debug\Assembly-CSharp.dll
 G:\UnityProjects\ChinessChess\obj\Debug\Assembly-CSharp.pdb
 G:\UnityProjects\ChinessChess\Temp\bin\Debug\websocket-sharp.dll
+G:\UnityProjects\ChinessChess\Temp\bin\Debug\Newtonsoft.Json.dll

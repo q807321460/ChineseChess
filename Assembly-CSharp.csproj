@@ -82,6 +82,9 @@
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>G:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>G:/UnityProjects/ChinessChess/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="websocket-sharp">
  <HintPath>G:/UnityProjects/ChinessChess/Assets/Plugins/websocket-sharp.dll</HintPath>
  </Reference>
