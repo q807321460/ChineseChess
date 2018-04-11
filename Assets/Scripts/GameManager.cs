@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour {
 	public Button m_btnDisconnect = null;
 	// 消息堆栈
 	public Stack<Dictionary<string, object>> m_stackMessage = new Stack<Dictionary<string, object>>();
+	//public enum TURN_STATE {
+	//	WAIT, // 不是自己的回合，等待对方下棋
+	//	READY, // 是自己的回合，还没开始走子
+	//	MOVING, // 已经选中了棋子，还没落子
+	//	FINISH // 已经落子
+	//};
 	// 是否是当前用户的回合
 	public bool m_isMyTurn = false;
 	// 当前有没有选择一个自己的棋子
@@ -108,33 +114,37 @@ public class GameManager : MonoBehaviour {
 #else
 			tapPosition = Input.mousePosition;
 #endif
+			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(tapPosition);
+			int col = CalcCol(worldPosition.x);
+			int row = CalcRow(worldPosition.y);
+			// 判断当前选中的位置是否合法
+			if (!IsValidPosition(col, row))
+				return;
+			GameObject[] pieces = m_chessBoard.GetComponent<ChessBoard>().chessPieces;
 			// 如果是首次选择，则获取点击到的棋子
 			if (!m_isSelecting) {
-				Ray ray = Camera.main.ScreenPointToRay(tapPosition);
-				RaycastHit hit;
-				if (Physics.Raycast(ray, out hit)) {
-					m_selectedPiece = hit.collider.gameObject.GetComponent<ChessPiece>();
-					print("点击的棋子颜色 " + m_selectedPiece.m_color + "类型 " + m_selectedPiece.m_type);
-					// 这里不用判断棋子的归属，所有玩家都可以移动所有的棋子
-					m_isSelecting = true;
-					m_selectedPiece.m_isSelected = true;
+				for (int i = 0; i < 32; i++) {
+					ChessPiece piece = pieces[i].GetComponent<ChessPiece>();
+					if (piece.m_col == col && piece.m_row == row) { // 如果点击的位置有棋子
+						m_isSelecting = true;
+						m_selectedPiece = piece;
+						m_selectedPiece.m_isSelected = true;
+						break;
+					}
 				}
-			} else { // 某则选中某个位置，将当前选中的子移动到指定的位置去
-				Vector3 worldPosition = Camera.main.ScreenToWorldPoint(tapPosition);
-				int col = CalcCol(worldPosition.x);
-				int row = CalcRow(worldPosition.y);
-				// 判断当前选中的位置是否合法
-				if (!IsValidPosition(col, row))
-					return;
+				// 如果没有获取到任何棋子，则无视该点击操作
+			} else {
 				// 判断当前选中的位置是否有其他棋子
-				var pieces = m_chessBoard.GetComponent<ChessBoard>().chessPieces;
-				foreach (GameObject obj in pieces) {
-					ChessPiece piece = obj.GetComponent<ChessPiece>();
+				for (int i = 0;i<32;i++) {
+					ChessPiece piece = pieces[i].GetComponent<ChessPiece>();
 					if (piece.m_col == col && piece.m_row == row) {
-						if (m_selectedPiece.m_color == piece.m_color)
+						if (m_selectedPiece.m_color == piece.m_color) { // 如果是同类棋子 
 							return;
-						else
-							Destroy(obj);
+						} else { // 如果不是同类棋子
+							// 告知服务器，obj这个棋子已经被吃掉了，同时在本地删除这个棋子
+							SendDeleteMessage(i);
+							Destroy(pieces[i]);
+						}
 						break;
 					}
 				}
@@ -145,12 +155,11 @@ public class GameManager : MonoBehaviour {
 				m_isMyTurn = false; // 不再是自己的回合了
 				// 计算当前选中棋子的index值
 				int index = -1; 
-				var obs = m_chessBoard.GetComponent<ChessBoard>().chessPieces;
 				for (int i = 0;i < 32; i++) {
-					var ob = obs[i];
-					if (ob != null && ob.GetComponent<ChessPiece>().m_isSelected) {
+					var piece = pieces[i];
+					if (piece != null && piece.GetComponent<ChessPiece>().m_isSelected) {
 						index = i;
-						ob.GetComponent<ChessPiece>().m_isSelected = false;
+						piece.GetComponent<ChessPiece>().m_isSelected = false;
 						break;
 					}
 				}
@@ -169,7 +178,7 @@ public class GameManager : MonoBehaviour {
 		string sType = dic["message_type"].ToString();
 		print("接收到的数据类型为：" + sType);
 		switch (sType) {
-			case "player_type": // 玩家类型设置
+			case "player_type": // 玩家类型设置 
 				string player_type = dic["message_detail"].ToString();
 				print("玩家设定的类型为：" + player_type);
 				if (player_type == "red") {
@@ -185,18 +194,24 @@ public class GameManager : MonoBehaviour {
 					m_ws.Close();
 				}
 				break;
-			case "move": // 监听到其他玩家移动棋子
-				string move = dic["message_detail"].ToString();
-				string[] strings = move.Split('-');
-				int index = int.Parse(strings[0]);
-				int col = int.Parse(strings[1]);
-				int row = int.Parse(strings[2]);
-				print(move);
-				GameObject piece = m_chessBoard.GetComponent<ChessBoard>().chessPieces[index];
-				piece.transform.position = new Vector3(CalcX(col), CalcY(row), -2f);
-				piece.GetComponent<ChessPiece>().m_col = col;
-				piece.GetComponent<ChessPiece>().m_row = row;
-				m_isMyTurn = true;
+			case "move": { // 监听到其他玩家移动棋子
+					string move_detail = dic["message_detail"].ToString();
+					string[] move_strings = move_detail.Split('-');
+					int move_index = int.Parse(move_strings[0]);
+					int move_col = int.Parse(move_strings[1]);
+					int move_row = int.Parse(move_strings[2]);
+					print(move_detail);
+					GameObject move_piece = m_chessBoard.GetComponent<ChessBoard>().chessPieces[move_index];
+					move_piece.transform.position = new Vector3(CalcX(move_col), CalcY(move_row), -2f);
+					move_piece.GetComponent<ChessPiece>().m_col = move_col;
+					move_piece.GetComponent<ChessPiece>().m_row = move_row;
+					m_isMyTurn = true;
+					break;
+				}
+			case "delete": // 接收到服务器的吃掉棋子指令
+				int delete_detail = Convert.ToInt32(dic["message_detail"].ToString()); // 将要删除的棋子的index
+				GameObject delete_piece = m_chessBoard.GetComponent<ChessBoard>().chessPieces[delete_detail];
+				Destroy(delete_piece);
 				break;
 		}
 	}
@@ -214,13 +229,27 @@ public class GameManager : MonoBehaviour {
 		if (m_ws != null)
 			m_ws.Close();
 	}
-
+	
+	// 向服务器发送移动棋子指令
 	public void SendMoveMessage(int index, int dstCol, int dstRow) {
 		if (index == -1)
 			return;
 		string str = string.Format("\"{0:D}-{1:D}-{2:D}\"", index, dstCol, dstRow);
 		string message = "{"
 			+ "\"message_type\" : \"move\""
+			+ " , "
+			+ "\"message_detail\" : " + str
+			+ "}";
+		m_ws.Send(message);
+	}
+
+	// 向服务器发送吃掉棋子指令
+	public void SendDeleteMessage(int index) {
+		if (index == -1)
+			return;
+		string str = string.Format("\"{0:D}\"", index);
+		string message = "{"
+			+ "\"message_type\" : \"delete\""
 			+ " , "
 			+ "\"message_detail\" : " + str
 			+ "}";

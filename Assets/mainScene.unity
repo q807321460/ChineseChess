@@ -824,13 +824,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ef1e9de4492334aa8e821faf1dfa80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_netType: 0
+  m_playerType: 0
   m_chessBoard: {fileID: 1534708914}
   m_url: ws://192.168.0.108:8088/ALiCloudServer/WebsocketTest/
   m_txtPlayerName: {fileID: 321343014}
   m_btnConnect: {fileID: 1286056007}
   m_btnDisconnect: {fileID: 1585888890}
   m_isMyTurn: 0
+  m_isSelecting: 0
+  m_selectedPiece: {fileID: 0}
   m_colBegin: 0
   m_colEnd: 0
   m_rowBegin: 0
@@ -1063,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ad78432467bca49a1e5777daa13f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabBlackBing: {fileID: 1392443065815338, guid: 7e533e3dfe5716b4083c2484797cb796,
+  prefabBlackBing: {fileID: 1663806847438934, guid: d2fdb14cb67a360429f88eb0ed7e4b7d,
     type: 2}
   prefabBlackJu: {fileID: 1843554439026240, guid: 8bf25591549906e48b0457c4031e92c3,
     type: 2}
